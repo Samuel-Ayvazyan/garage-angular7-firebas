@@ -18,6 +18,7 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
+  MatToolbarModule,
   MatFormFieldModule } from "@angular/material";
 
 @NgModule({
@@ -31,6 +32,7 @@ import {
     AngularFirestoreModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatToolbarModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -44,10 +46,6 @@ import {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private afs: AngularFirestore) {
-    afs.firestore.settings({
-      timestampsInSnapshots: true,
-    });
-    afs.firestore.enablePersistence();
+  constructor() {
   }
 }
