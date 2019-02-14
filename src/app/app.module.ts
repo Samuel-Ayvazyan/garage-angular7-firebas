@@ -9,17 +9,7 @@ import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestor
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {
-  MatInputModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatSortModule,
-  MatTableModule,
-  MatIconModule,
-  MatButtonModule,
-  MatCardModule,
-  MatToolbarModule,
-  MatFormFieldModule } from "@angular/material";
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -31,16 +21,7 @@ import {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
