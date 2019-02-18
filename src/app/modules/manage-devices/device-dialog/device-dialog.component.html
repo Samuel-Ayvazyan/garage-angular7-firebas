@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <p>Device details</p>
+
+  <form class="form-container" [formGroup]="frm">
+    <mat-form-field>
+      <input matInput placeholder="Device" formControlName="device">
+      <mat-error *ngIf="frm.get('device')?.invalid">Device is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="OS" formControlName="os">
+      <mat-error *ngIf="frm.get('os')?.invalid">OS is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="manufacturer" formControlName="manufacturer">
+      <mat-error *ngIf="frm.get('manufacturer')?.invalid">Manufacturer is required</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button (click)="onSubmit()" cdkFocusInitial [disabled]="!frm.valid || frm.pristine">Submit</button>
+</div>

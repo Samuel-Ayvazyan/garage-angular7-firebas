@@ -1,3 +1,14 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+      <span>Devices list</span>
+      <span class="example-spacer"></span>
+      <button mat-button color="primary" (click)="openAdd()">
+          <mat-icon class="example-icon">add</mat-icon>
+          Add Device
+      </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <ng-container matColumnDef="id">
@@ -11,7 +22,7 @@
   </ng-container>
 
   <ng-container matColumnDef="os">
-    <mat-header-cell *matHeaderCellDef> os </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> OS </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.os}} </mat-cell>
   </ng-container>
 
