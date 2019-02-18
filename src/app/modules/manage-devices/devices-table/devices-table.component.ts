@@ -10,7 +10,7 @@ import { DeviceDialogComponent } from '../device-dialog/device-dialog.component'
   styleUrls: ['./devices-table.component.scss']
 })
 export class DevicesTableComponent implements OnInit {
-  displayedColumns = ['id', 'device', 'os', 'manufacturer', 'lastCheckOutDate', 'lastCheckOutBy', 'isCheckedOut'];
+  displayedColumns = ['id', 'device', 'os', 'manufacturer', 'lastCheckOutDate', 'lastCheckOutBy', 'isCheckedOut', 'edit'];
   dataSource = new DeviceDataSource(this.ds);
 
   constructor(private ds: DeviceService, public dialog: MatDialog) { }
@@ -22,7 +22,8 @@ export class DevicesTableComponent implements OnInit {
     const dialogRef = this.dialog.open(DeviceDialogComponent, {
       width: '250px',
       data: {
-        title: "Add new"
+        title: "Add new",
+        values: null
       }
     });
 
@@ -35,12 +36,56 @@ export class DevicesTableComponent implements OnInit {
     });
   }
 
+  public openEdit(device) {
+    console.log(device);
+    const dialogRef = this.dialog.open(DeviceDialogComponent, {
+      width: '250px',
+      data: {
+        title: "Edit",
+        $key: device.$key,
+        values: this._prepareForEditDialog(device),
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result) {
+        result = this._prepareForEdit(result);
+        console.log(result);
+        this.ds.updateDevice(result);
+      }
+    });
+  }
+
+  public deleteDevice(device) {
+    this.ds.deleteDevice(device.$key);
+  }
+
   private _prepareForAdd(device) {
-    delete device.id
-    device.isCheckedOut = false;
-    device.lastCheckOutBy = null;
-    device.lastCheckOutDate = null;
-    return device
+    let deviceDup: any = Object.assign({},device)
+    delete deviceDup.id;
+    delete deviceDup.$key;
+    deviceDup.isCheckedOut = false;
+    deviceDup.lastCheckOutBy = null;
+    deviceDup.lastCheckOutDate = null;
+    return deviceDup
+  }
+  private _prepareForEdit(device) {
+    let deviceDup: any = Object.assign({},device)
+    delete deviceDup.id;
+    delete deviceDup.isCheckedOut;
+    delete deviceDup.lastCheckOutBy;
+    delete deviceDup.lastCheckOutDate;
+    return deviceDup
+  }
+  private _prepareForEditDialog(device) {
+    let deviceDup: any = Object.assign({},device)
+    delete deviceDup.id;
+    delete deviceDup.$key;
+    delete deviceDup.isCheckedOut;
+    delete deviceDup.lastCheckOutBy;
+    delete deviceDup.lastCheckOutDate;
+    return deviceDup
   }
 }
 

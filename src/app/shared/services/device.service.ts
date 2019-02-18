@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Device } from '../interfaces/device'
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -15,7 +16,13 @@ export class DeviceService {
   }
 
   getDevices(): Observable<Device[]> {
-    return this.itemsCollection.valueChanges();
+    return this.itemsCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Device;
+        const $key = a.payload.doc.id;
+        return { $key, ...data };
+      }))
+    );
   }
 
   addDevice(item: Device) {

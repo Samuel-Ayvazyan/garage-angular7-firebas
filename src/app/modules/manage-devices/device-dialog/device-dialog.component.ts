@@ -15,8 +15,6 @@ export class DeviceDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
     fb: FormBuilder) {
       this.frm = fb.group({
-        $key: null,
-        id: null,
         device: ['', Validators.required],
         os: ['', Validators.required],
         manufacturer: ['', Validators.required],
@@ -24,11 +22,20 @@ export class DeviceDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.data.values) {
+      this.frm.setValue(this.data.values);
+    }
   }
 
   onSubmit() {
     if( this.frm.valid ) {
-      this.dialogRef.close(this.frm.value);
+      console.log(this.data.$key);
+      if(this.data.$key) {
+        let $key = this.data.$key;
+        this.dialogRef.close({ $key, ...this.frm.value });
+      } else {
+        this.dialogRef.close(this.frm.value);
+      }
     }
   }
   onNoClick() {
