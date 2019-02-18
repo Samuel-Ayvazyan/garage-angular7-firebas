@@ -3,6 +3,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { DeviceService } from 'src/app/shared/services/device.service';
 import { MatDialog } from '@angular/material';
 import { DeviceDialogComponent } from '../device-dialog/device-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-devices-table',
@@ -28,7 +29,6 @@ export class DevicesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result) {
         result = this._prepareForAdd(result);
         this.ds.addDevice(result);
@@ -37,7 +37,6 @@ export class DevicesTableComponent implements OnInit {
   }
 
   public openEdit(device) {
-    console.log(device);
     const dialogRef = this.dialog.open(DeviceDialogComponent, {
       width: '250px',
       data: {
@@ -48,17 +47,27 @@ export class DevicesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result) {
         result = this._prepareForEdit(result);
-        console.log(result);
         this.ds.updateDevice(result);
       }
     });
   }
 
   public deleteDevice(device) {
-    this.ds.deleteDevice(device.$key);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: "Please confirm",
+        message: "Delete selected device?",
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.ds.deleteDevice(device.$key);
+      }
+    });
   }
 
   private _prepareForAdd(device) {

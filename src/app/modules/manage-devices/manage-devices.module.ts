@@ -5,9 +5,10 @@ import { ManageDevicesRoutingModule } from './manage-devices-routing.module';
 import { MaterialModule } from 'src/app/material.module';
 import { DeviceDialogComponent } from './device-dialog/device-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
-  declarations: [DevicesTableComponent, DeviceDialogComponent],
+  declarations: [DevicesTableComponent, DeviceDialogComponent, ConfirmDialogComponent],
   imports: [
     CommonModule,
     ManageDevicesRoutingModule,
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   entryComponents: [
     DeviceDialogComponent,
+    ConfirmDialogComponent,
   ]
 })
 export class ManageDevicesModule { }
