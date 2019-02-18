@@ -49,6 +49,14 @@
   <ng-container matColumnDef="edit">
     <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
     <mat-cell *matCellDef="let device">
+      <button mat-icon-button aria-label="Check-in" [disabled]="!device.isCheckedOut"
+            (click)="checkIn(device); $event.stopPropagation()">
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Check-Out" [disabled]="device.isCheckedOut"
+            (click)="checkOut(device); $event.stopPropagation()">
+        <mat-icon>expand_less</mat-icon>
+      </button>
       <button mat-icon-button aria-label="Edit"
               (click)="openEdit(device); $event.stopPropagation()">
         <mat-icon>edit</mat-icon>

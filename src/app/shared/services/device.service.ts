@@ -32,6 +32,10 @@ export class DeviceService {
   updateDevice(item : Device){
     this.itemsCollection.doc(item.$key).update(item);
   }
+
+  updateCheckedOut($key : string, isCheckedOut: boolean){
+    this.itemsCollection.doc($key).update({isCheckedOut: isCheckedOut});
+  }
  
   deleteDevice($key : string){
     this.itemsCollection.doc($key).delete();

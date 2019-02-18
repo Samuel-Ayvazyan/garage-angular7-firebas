@@ -70,6 +70,13 @@ export class DevicesTableComponent implements OnInit {
     });
   }
 
+  public checkIn(device) {
+    this.ds.updateCheckedOut(device.$key, false);
+  }
+  public checkOut(device) {
+    this.ds.updateCheckedOut(device.$key, true);
+  }
+
   private _prepareForAdd(device) {
     let deviceDup: any = Object.assign({},device)
     delete deviceDup.id;
