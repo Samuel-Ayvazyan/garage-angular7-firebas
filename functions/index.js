@@ -1,8 +1,16 @@
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
+const db = admin.firestore();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+exports.onCheckedOutChange = functions.firestore
+    .document('devices/{device}')
+    .onUpdate((change, context) => {
+        const newValue = change.after.data();
+        const previousValue = change.before.data();
+        if( newValue.isCheckedOut != previousValue.isCheckedOut && newValue.isCheckedOut === true ) {
+            db.collection('devices').doc(context.params.device).update(
+                {'lastCheckOutDate': context.timestamp}
+            );
+        }
+});
