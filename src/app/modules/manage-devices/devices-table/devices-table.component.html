@@ -51,11 +51,11 @@
     <mat-cell *matCellDef="let device">
       <button mat-icon-button aria-label="Check-in" [disabled]="!device.isCheckedOut"
             (click)="checkIn(device); $event.stopPropagation()">
-        <mat-icon>expand_more</mat-icon>
+        <mat-icon matTooltip="Check-in">expand_more</mat-icon>
       </button>
       <button mat-icon-button aria-label="Check-Out" [disabled]="device.isCheckedOut"
             (click)="checkOut(device); $event.stopPropagation()">
-        <mat-icon>expand_less</mat-icon>
+        <mat-icon matTooltip="Check-Out">expand_less</mat-icon>
       </button>
       <button mat-icon-button aria-label="Edit"
               (click)="openEdit(device); $event.stopPropagation()">

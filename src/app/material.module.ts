@@ -14,6 +14,7 @@ import {
     MatToolbarModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatTooltipModule,
 } from "@angular/material";
 
 @NgModule({
@@ -30,6 +31,7 @@ import {
     MatCardModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatTooltipModule,
   ],
   exports: [
     CommonModule,
@@ -44,6 +46,7 @@ import {
     MatCardModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatTooltipModule,
   ],
   declarations: []
 })

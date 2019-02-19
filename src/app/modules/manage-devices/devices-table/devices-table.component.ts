@@ -74,7 +74,18 @@ export class DevicesTableComponent implements OnInit {
     this.ds.updateCheckedOut(device.$key, false);
   }
   public checkOut(device) {
-    this.ds.updateCheckedOut(device.$key, true);
+    this.ds.updateCheckedOut(device.$key, true).then( data => {
+      console.log('Check-out is done');
+    }).catch(error =>{
+      this.dialog.open(ConfirmDialogComponent, {
+        width: '350px',
+        data: {
+          title: "Information",
+          message: "Checkouts can only be performed between 9AM and 5PM",
+          onlyConfirm: true,
+        }
+      });
+    });
   }
 
   private _prepareForAdd(device) {
