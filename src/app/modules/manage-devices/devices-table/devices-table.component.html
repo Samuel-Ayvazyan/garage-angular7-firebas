@@ -2,7 +2,7 @@
     <mat-toolbar-row>
       <span>Devices list</span>
       <span class="toolbar-spacer"></span>
-      <button mat-button color="primary" (click)="openAdd()">
+      <button mat-button color="primary" (click)="openAdd()" [disabled]="this.devicesCount>=10">
           <mat-icon class="example-icon">add</mat-icon>
           Add Device
       </button>

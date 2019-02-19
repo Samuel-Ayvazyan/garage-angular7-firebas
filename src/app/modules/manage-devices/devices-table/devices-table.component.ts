@@ -13,10 +13,14 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 export class DevicesTableComponent implements OnInit {
   displayedColumns = ['id', 'device', 'os', 'manufacturer', 'lastCheckOutDate', 'lastCheckOutBy', 'isCheckedOut', 'edit'];
   dataSource = new DeviceDataSource(this.ds);
+  devicesCount;
 
   constructor(private ds: DeviceService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.ds.getDevices().subscribe( data => {
+      this.devicesCount = data.length;
+    })
   }
 
   public openAdd(): void {
