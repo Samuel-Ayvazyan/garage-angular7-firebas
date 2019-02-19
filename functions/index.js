@@ -9,8 +9,25 @@ exports.onCheckedOutChange = functions.firestore
         const newValue = change.after.data();
         const previousValue = change.before.data();
         if( newValue.isCheckedOut != previousValue.isCheckedOut && newValue.isCheckedOut === true ) {
-            db.collection('devices').doc(context.params.device).update(
+            return db.collection('devices').doc(context.params.device).update(
                 {'lastCheckOutDate': context.timestamp}
             );
         }
+});
+
+exports.onDeviceCreateUpdateID = functions.firestore
+    .document('devices/{device}')
+    .onCreate((snapshot, context) => {
+        return db.collection('devices')
+            .orderBy('id', 'desc')
+            .limit(1)
+            .get().then(function(snap) {
+                var maxID = 1;
+                snap.forEach(function(childSnapshot) {
+                    maxID = childSnapshot.data().id >= maxID ? childSnapshot.data().id + 1 : maxID;
+                })
+                return db.collection('devices').doc(context.params.device).update(
+                    { "id": maxID }
+                );
+            });
 });
