@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
-import { DeviceService } from 'src/app/shared/services/device.service';
+import { DeviceService } from 'src/app/shared/services/devices/device.service';
 import { MatDialog } from '@angular/material';
 import { DeviceDialogComponent } from '../device-dialog/device-dialog.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';

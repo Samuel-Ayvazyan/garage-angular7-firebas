@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Device } from '../interfaces/device'
+import { Device } from '../../interfaces/device'
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
