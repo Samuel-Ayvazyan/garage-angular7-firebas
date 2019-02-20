@@ -26,7 +26,7 @@ export class DeviceService {
   }
 
   addDevice(item: Device) {
-    this.itemsCollection.add(item);
+    return this.itemsCollection.add(item);
   }
 
   updateDevice(item : Device){

@@ -35,7 +35,18 @@ export class DevicesTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         result = this._prepareForAdd(result);
-        this.ds.addDevice(result);
+        this.ds.addDevice(result).then( data => {
+          console.log('Device is added');
+        }).catch(error =>{
+          this.dialog.open(ConfirmDialogComponent, {
+            width: '350px',
+            data: {
+              title: "Information",
+              message: "Only 10 Devices allowed",
+              onlyConfirm: true,
+            }
+          });
+        });
       }
     });
   }

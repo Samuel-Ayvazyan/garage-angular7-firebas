@@ -33,7 +33,7 @@
 
   <ng-container matColumnDef="lastCheckOutDate">
     <mat-header-cell *matHeaderCellDef> lastCheckOutDate </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.lastCheckOutDate}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.lastCheckOutDate | date:'medium'}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="lastCheckOutBy">
