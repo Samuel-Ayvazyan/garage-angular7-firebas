@@ -108,6 +108,13 @@ export class DevicesTableComponent implements OnInit {
     });
   }
 
+  public moreThanWeek(toCheck) {
+    toCheck = new Date(toCheck);
+    let diff =( (new Date()).getTime() - toCheck.getTime()) / 1000;
+    let weeksDiff = diff / (60 * 60 * 24 * 7);
+    return weeksDiff>1;
+  }
+
   private _prepareForAdd(device) {
     let deviceDup: any = Object.assign({},device)
     delete deviceDup.id;

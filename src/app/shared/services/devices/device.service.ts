@@ -3,6 +3,7 @@ import { Device } from '../../interfaces/device'
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
 
 
 @Injectable({
@@ -13,6 +14,15 @@ export class DeviceService {
 
   constructor(private afs: AngularFirestore) {
     this.itemsCollection = afs.collection<Device>('devices');
+  }
+  
+  getTime() {
+    return this.afs.collection('configs').doc('serverTime');
+  }
+  updateTime() {
+    this.afs.collection('configs').doc('serverTime').set({
+      serverTime: firebase.firestore.FieldValue.serverTimestamp()
+    })
   }
 
   getDevices(): Observable<Device[]> {

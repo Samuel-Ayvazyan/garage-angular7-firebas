@@ -33,7 +33,9 @@
 
   <ng-container matColumnDef="lastCheckOutDate">
     <mat-header-cell *matHeaderCellDef> lastCheckOutDate </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.lastCheckOutDate | date:'medium'}} </mat-cell>
+    <mat-cell *matCellDef="let element" [ngClass]="{'orange':moreThanWeek(element.lastCheckOutDate)}">
+      {{element.lastCheckOutDate | date:'medium'}}
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="lastCheckOutBy">
@@ -71,3 +73,4 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
+<p>Devices marked with <span class="orange">Orange colour</span> was checked out for more than a week</p>
