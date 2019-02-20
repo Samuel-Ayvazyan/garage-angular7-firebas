@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
 
+// To keep lastCheckOutDate accurated with Server time we need to update it on back-end side.
 exports.onCheckedOutChange = functions.firestore
     .document('devices/{device}')
     .onUpdate((change, context) => {
@@ -15,6 +16,7 @@ exports.onCheckedOutChange = functions.firestore
         }
 });
 
+// As Firestore doesn't support auto-incrementing ID, we need to have it organized on back-end side.
 exports.onDeviceCreateUpdateID = functions.firestore
     .document('devices/{device}')
     .onCreate((snapshot, context) => {
@@ -30,4 +32,25 @@ exports.onDeviceCreateUpdateID = functions.firestore
                     { "id": maxID }
                 );
             });
+});
+
+// As Firestore rules support only atomic value comparission,
+// we will keep quantity of Devices in separate atomic field to use it in a Rules.
+exports.numberOfDevicesOnCreate = functions.firestore
+    .document('devices/{device}')
+    .onCreate((snapshot, context) => {
+        db.collection('devices').get().then(snap => {
+            db.collection('configs').doc('numberOfDevices').set(
+                { "length": snap.size }
+            );
+        });
+});
+exports.numberOfDevicesOnDelete = functions.firestore
+    .document('devices/{device}')
+    .onDelete((snapshot, context) => {
+        db.collection('devices').get().then(snap => {
+            db.collection('configs').doc('numberOfDevices').set(
+                { "length": snap.size }
+            );
+        });
 });
