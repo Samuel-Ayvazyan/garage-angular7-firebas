@@ -33,8 +33,17 @@ export class DeviceService {
     this.itemsCollection.doc(item.$key).update(item);
   }
 
-  updateCheckedOut($key : string, isCheckedOut: boolean){
-    return this.itemsCollection.doc($key).update({isCheckedOut: isCheckedOut});
+  updateCheckedOut($key : string, isCheckedOut: boolean, lastCheckOutBy: string){
+    if(isCheckedOut) {
+      return this.itemsCollection.doc($key).update(
+        {
+          isCheckedOut: isCheckedOut,
+          lastCheckOutBy: lastCheckOutBy
+        }
+      );
+    } else {
+      return this.itemsCollection.doc($key).update({isCheckedOut: isCheckedOut});
+    }
   }
  
   deleteDevice($key : string){

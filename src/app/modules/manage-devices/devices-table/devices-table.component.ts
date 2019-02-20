@@ -4,6 +4,7 @@ import { DeviceService } from 'src/app/shared/services/devices/device.service';
 import { MatDialog } from '@angular/material';
 import { DeviceDialogComponent } from '../device-dialog/device-dialog.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-devices-table',
@@ -14,12 +15,16 @@ export class DevicesTableComponent implements OnInit {
   displayedColumns = ['id', 'device', 'os', 'manufacturer', 'lastCheckOutDate', 'lastCheckOutBy', 'isCheckedOut', 'edit'];
   dataSource = new DeviceDataSource(this.ds);
   devicesCount;
+  user: any;
 
-  constructor(private ds: DeviceService, public dialog: MatDialog) { }
+  constructor(private ds: DeviceService, public dialog: MatDialog, public auth: AuthService) { }
 
   ngOnInit() {
     this.ds.getDevices().subscribe( data => {
       this.devicesCount = data.length;
+    })
+    this.auth.user.subscribe( user => {
+      this.user = user;
     })
   }
 
@@ -86,10 +91,10 @@ export class DevicesTableComponent implements OnInit {
   }
 
   public checkIn(device) {
-    this.ds.updateCheckedOut(device.$key, false);
+    this.ds.updateCheckedOut(device.$key, false, '');
   }
   public checkOut(device) {
-    this.ds.updateCheckedOut(device.$key, true).then( data => {
+    this.ds.updateCheckedOut(device.$key, true, this.user.displayName).then( data => {
       console.log('Check-out is done');
     }).catch(error =>{
       this.dialog.open(ConfirmDialogComponent, {
